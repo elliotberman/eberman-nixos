@@ -34,22 +34,28 @@
       nixos-wsl,
       systems,
       treefmt-nix,
+      home-manager,
       ...
-    }:
+    }@flakeInputs:
     let
       forEachSystem =
         f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
     in
     {
+      nixosModules = {
+        default = import ./nixos-modules flakeInputs;
+      };
 
       nixosConfigurations = {
         wslx86_64 = nixpkgs.lib.nixosSystem {
           modules = [
+            self.nixosModules.default
             nixos-wsl.nixosModules.default
             {
               nixpkgs.hostPlatform = "x86_64-linux";
               system.stateVersion = "25.05";
               wsl.enable = true;
+              wsl.defaultUser = "eberman";
             }
           ];
         };

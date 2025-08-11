@@ -18,7 +18,7 @@ in
         editorconfig.editorconfig
         github.vscode-pull-request-github
         jaycetyle.vscode-gnu-global
-        jlever.elfpreview
+        jlevere.elfpreview
         jnoortheen.nix-ide
         johnpapa.vscode-peacock
         legale.dts-formatter

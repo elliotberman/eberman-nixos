@@ -51,12 +51,17 @@
           modules = [
             self.nixosModules.default
             nixos-wsl.nixosModules.default
-            {
-              nixpkgs.hostPlatform = "x86_64-linux";
-              system.stateVersion = "25.05";
-              wsl.enable = true;
-              wsl.defaultUser = "eberman";
-            }
+            (
+              { lib, ... }:
+              {
+                nixpkgs.hostPlatform = "x86_64-linux";
+                system.stateVersion = "25.05";
+                wsl.enable = true;
+                wsl.defaultUser = "eberman";
+
+                networking.networkmanager.enable = lib.mkForce false;
+              }
+            )
           ];
         };
       };

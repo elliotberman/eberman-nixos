@@ -1,53 +1,54 @@
-{home-manager, ... }@flakeInputs:
+{ home-manager, ... }@flakeInputs:
 { pkgs, config, ... }:
 {
-    imports = [
-        home-manager.nixosModules.home-manager
-        (import ./eberman.nix flakeInputs)
-    ];
+  imports = [
+    home-manager.nixosModules.home-manager
+    (import ./eberman.nix flakeInputs)
+    ./desktop.nix
+  ];
 
-    users.mutableUsers = false;
+  users.mutableUsers = false;
 
-    boot.tmp.cleanOnBoot = true;
+  boot.tmp.cleanOnBoot = true;
 
-    programs = {
-        vim = {
-            enable = true;
-            defaultEditor = true;
-        };
-        zsh.enable = true;
-        adb.enable = true;
+  programs = {
+    vim = {
+      enable = true;
+      defaultEditor = true;
     };
+    zsh.enable = true;
+    adb.enable = true;
+  };
 
-    environment.systemPackages = with pkgs; [
-        python3
-        git
-    ];
+  environment.systemPackages = with pkgs; [
+    python3
+    git
+  ];
 
-    time.timeZone = "America/Los_Angeles";
+  time.timeZone = "America/Los_Angeles";
 
-    networking.networkmanager.enable = true;
+  networking.networkmanager.enable = true;
 
-    virtualisation = {
-        docker.enable = true;
-        libvirtd = {
-            enable = config.programs.virt-manager.enable;
-            qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
-        };
+  virtualisation = {
+    docker.enable = true;
+    libvirtd = {
+      enable = config.programs.virt-manager.enable;
+      qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
     };
+  };
 
-    # Disable ModemManager because it interferes with Qualcomm EDL. It gets started
-    # automatically by default, but I'm not likely to plug in a modem.
-    systemd.services.ModemManager.enable = false;
+  # Disable ModemManager because it interferes with Qualcomm EDL. It gets started
+  # automatically by default, but I'm not likely to plug in a modem.
+  systemd.services.ModemManager.enable = false;
 
-    home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = false;
-        backupFileExtension = "backup";
-    };
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = false;
+    backupFileExtension = "backup";
+  };
 
-    nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-    ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }

@@ -40,6 +40,10 @@
 
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
+
+      envExtra = ''
+        HKML_DIR=/home/eberman/.cache/hkm
+      '';
     };
 
     fzf = {

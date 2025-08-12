@@ -54,6 +54,26 @@
       zip
       zsh
       zstd
+
+      (writeShellApplication {
+        name = "hkml";
+        runtimeInputs = [
+          git
+          python3
+        ];
+        text =
+          let
+            src = fetchFromGitHub {
+              owner = "sjp38";
+              repo = "hackermail";
+              tag = "v1.4.3";
+              hash = "sha256-1r7sDugXODvvSZchVRTrxAzUM0126p8lzbGqKLurKIA=";
+            };
+          in
+          ''
+            python "${src}/src/hkml.py" "$@"
+          '';
+      })
     ];
   };
 
@@ -62,6 +82,7 @@
 
     git = {
       enable = true;
+      package = pkgs.gitFull;
       userName = "Elliot Berman";
       userEmail = "elliotjb@elliotjb.com";
 
@@ -85,6 +106,13 @@
         alias = {
           logfix = ''log --format="Fixes %h (\"%s\")" --abbrev=12'';
           logad = "log --pretty='format:%C(auto)%h <%C(auto,blue)%aE%C(auto,reset) %C(auto,green)%ah%C(auto,reset) %s'";
+        };
+
+        sendemail = {
+          smtpServer = "mail.privateemail.com";
+          smtpServerPort = "465";
+          smtpEncryption = "ssl";
+          smtpUser = "elliotjb@elliotjb.com";
         };
       };
     };

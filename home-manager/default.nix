@@ -3,9 +3,11 @@
 {
   imports = [
     nix-index.homeModules.nix-index
-    vscode-server.homeModules.default
-    ./shell.nix
     ./desktop.nix
+    ./mail.nix
+    ./shell.nix
+
+    vscode-server.homeModules.default
     (import ./vscode.nix flakeInputs)
   ];
   home = {

@@ -8,8 +8,23 @@
         aws.disabled = true;
         gcloud.disabled = true;
         line_break.disabled = true;
+        package.disabled = true;
+        rust.disabled = true;
         shell.disabled = false;
         shell.zsh_indicator = "";
+
+        direnv = {
+          disabled = false;
+          symbol = "📁";
+          format = "[$symbol$loaded$allowed]($style)";
+          allowed_msg = "";
+          loaded_msg = "";
+        };
+
+        nix_shell = {
+          symbol = "❄️";
+          format = "via [$symbol $name]($style) ";
+        };
       };
     };
 

@@ -17,6 +17,7 @@ flakeInputs:
 
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDzsrN0GPOLPT9aaSO5R+VhJcGKDf7w3R8ng+omJrdu3"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1y0we2CHRY4ETSrjucwle0oimNBFdhrDb4q3LZu1Sl"
     ];
   };
 

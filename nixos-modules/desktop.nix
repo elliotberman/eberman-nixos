@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 {
   programs = {
-    _1password-gui.enable = config.programs._1password.enable;
+    _1password-gui.enable = config.programs._1password.enable && config.services.xserver.enable;
   };
 
   services.xserver = {

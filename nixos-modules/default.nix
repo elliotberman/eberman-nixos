@@ -20,6 +20,19 @@
     adb.enable = true;
   };
 
+  services = {
+    udev.extraRules = ''
+      # For Jetson AGX Orin Dev Kit board automation
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7045", GROUP="dialout", TAG+="uaccess"
+      # For Jetson Orin Nano Dev Kit board automation
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7020", GROUP="dialout", TAG+="uaccess"
+      # For Qualcomm products
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="05c6", MODE="0664", GROUP="dialout"
+      # For fastboot
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="d00d", MODE="0664", GROUP="dialout"
+    '';
+  };
+
   environment.systemPackages = with pkgs; [
     python3
     git

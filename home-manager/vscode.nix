@@ -2,9 +2,10 @@
 { pkgs, config, ... }:
 let
   vscode = config.programs.vscode.package;
-  extensions-latest = nix-vscode-extensions.vscode-marketplace;
+  nix-vscode-extensions' = nix-vscode-extensions.extensions.${pkgs.hostPlatform.system};
+  extensions-latest = nix-vscode-extensions'.vscode-marketplace;
   extensions-compat =
-    (nix-vscode-extensions.forVSCodeVersion vscode.version).vscode-marketplace-release;
+    (nix-vscode-extensions'.forVSCodeVersion vscode.version).vscode-marketplace-release;
   extensions = extensions-latest // extensions-compat;
 in
 {

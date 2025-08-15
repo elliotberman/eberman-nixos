@@ -33,6 +33,7 @@
     '';
   };
 
+  environment.enableAllTerminfo = true;
   environment.systemPackages = with pkgs; [
     python3
     git

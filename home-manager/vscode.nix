@@ -75,6 +75,8 @@ in
           "editor.tabSize" = 4;
           "editor.formatOnSave" = true;
         };
+        "chat.agent.enabled" = false;
+        "chat.commandCenter.enabled" = false;
       };
     };
   };

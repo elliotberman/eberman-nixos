@@ -53,6 +53,10 @@
         "switch-windows-backward" = [ "<Shift><Alt>Tab" ];
       };
 
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        "logout" = [];
+      };
+
       "org/gnome/shell/extensions/system-monitor" = {
         "show-swap" = false;
       };

@@ -1,4 +1,4 @@
-{ nix-index, vscode-server, ... }@flakeInputs:
+{ nix-index, vscode-server, ... }:
 { pkgs, ... }:
 {
   imports = [
@@ -8,7 +8,7 @@
     ./shell.nix
 
     vscode-server.homeModules.default
-    (import ./vscode.nix flakeInputs)
+    ./vscode.nix
   ];
   home = {
     username = "eberman";

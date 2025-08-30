@@ -1,10 +1,14 @@
-{ home-manager, ... }@flakeInputs:
+{ home-manager, nix-vscode-extensions, ... }@flakeInputs:
 { pkgs, config, ... }:
 {
   imports = [
     home-manager.nixosModules.home-manager
     (import ./eberman.nix flakeInputs)
     ./desktop.nix
+  ];
+
+  nixpkgs.overlays = [
+    nix-vscode-extensions.overlays.default
   ];
 
   users.mutableUsers = false;
@@ -60,6 +64,8 @@
     useUserPackages = false;
     backupFileExtension = "backup";
   };
+
+  documentation.dev.enable = true;
 
   nix.settings.experimental-features = [
     "nix-command"

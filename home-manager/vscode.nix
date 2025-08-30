@@ -1,8 +1,7 @@
-{ nix-vscode-extensions, ... }@flakeInputs:
 { pkgs, config, ... }:
 let
   vscode = config.programs.vscode.package;
-  nix-vscode-extensions' = nix-vscode-extensions.extensions.${pkgs.hostPlatform.system};
+  nix-vscode-extensions' = pkgs.nix-vscode-extensions;
   extensions-latest = nix-vscode-extensions'.vscode-marketplace;
   extensions-compat =
     (nix-vscode-extensions'.forVSCodeVersion vscode.version).vscode-marketplace-release;
@@ -25,6 +24,8 @@ in
         legale.dts-formatter
         luveti.kconfig
         mkhl.direnv
+        ms-vscode.remote-explorer
+        ms-vscode-remote.remote-ssh
         plorefice.devicetree
         rust-lang.rust-analyzer
         tamasfe.even-better-toml
@@ -77,6 +78,12 @@ in
         };
         "chat.agent.enabled" = false;
         "chat.commandCenter.enabled" = false;
+
+        "remote.SSH" = {
+          "externalSSH_ASKPASS" = true;
+          "lockfilesInTmp" = true;
+          "configFile" = "/home/eberman/.vscode/ssh_config";
+        };
       };
     };
   };

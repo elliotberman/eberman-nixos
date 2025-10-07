@@ -12,6 +12,7 @@
       chromium
       gnome-tweaks
       gnomeExtensions.system-monitor
+      krita
       meld
     ];
 

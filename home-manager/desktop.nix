@@ -10,6 +10,8 @@
   config = lib.mkIf config.eberman.enableDesktop {
     home.packages = with pkgs; [
       chromium
+      diffoscope
+      gdmap
       gnome-tweaks
       gnomeExtensions.system-monitor
       krita

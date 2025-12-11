@@ -50,8 +50,6 @@
         glf = "git logfix";
         glfh = "git --no-pager logfix -n1";
         gloh = "git --no-pager log --oneline -n10";
-
-        kerntags = "rm *TAGS; make ARCH=arm64 gtags";
       };
 
       syntaxHighlighting.enable = true;

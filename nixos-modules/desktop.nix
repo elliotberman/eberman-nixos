@@ -4,10 +4,8 @@
     _1password-gui.enable = config.programs._1password.enable && config.services.xserver.enable;
   };
 
-  services.xserver = {
-    displayManager.gdm.enable = config.services.xserver.enable;
-    desktopManager.gnome.enable = config.services.xserver.enable;
-  };
+  services.displayManager.gdm.enable = config.services.xserver.enable;
+  services.desktopManager.gnome.enable = config.services.xserver.enable;
 
   environment.gnome.excludePackages = with pkgs; [
     gnome-maps

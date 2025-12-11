@@ -124,10 +124,10 @@
     git = {
       enable = true;
       package = pkgs.gitFull;
-      userName = "Elliot Berman";
-      userEmail = "elliotjb@elliotjb.com";
 
-      extraConfig = {
+      settings = {
+        user.name = "Elliot Berman";
+        user.email = "elliotjb@elliotjb.com";
         core.editor = "vim";
         init.defaultBranch = "main";
         color.ui = "auto";

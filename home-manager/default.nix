@@ -158,7 +158,26 @@
       };
     };
 
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        forwardAgent = false;
+        addKeysToAgent = "no";
+        serverAliveInterval = 20;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+
+        controlMaster = "auto";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "5s";
+
+        extraOptions = {
+          WarnWeakCrypto = "no";
+        };
+      };
+    };
   };
 
   services = {

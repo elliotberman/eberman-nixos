@@ -70,7 +70,9 @@
       };
 
       "org/gnome/mutter" = {
+        edge-tiling = false;
         "workspace-on-on-primary" = false;
+        workspaces-only-on-primary = false;
       };
 
       "org/gnome/shell/apps-switcher" = {

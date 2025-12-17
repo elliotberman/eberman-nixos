@@ -13,6 +13,7 @@ in
     profiles.default = {
       extensions = with extensions; [
         arrterian.nix-env-selector
+        catppuccin.catppuccin-vsc
         christian-kohler.path-intellisense
         eamodio.gitlens
         editorconfig.editorconfig
@@ -24,8 +25,8 @@ in
         legale.dts-formatter
         luveti.kconfig
         mkhl.direnv
-        ms-vscode.remote-explorer
         ms-vscode-remote.remote-ssh
+        ms-vscode.remote-explorer
         plorefice.devicetree
         rust-lang.rust-analyzer
         tamasfe.even-better-toml
@@ -58,7 +59,6 @@ in
         ];
         "path-intellisense.extensionOnImport" = true;
         "window.restoreWindows" = "none";
-        "workbench.colorTheme" = "Quiet Light";
         "editor.renderWhitespace" = "boundary";
         "terminal.integrated.allowChords" = false;
         "files.simpleDialog.enable" = true;
@@ -78,6 +78,10 @@ in
         };
         "chat.agent.enabled" = false;
         "chat.commandCenter.enabled" = false;
+
+        "window.autoDetectColorScheme" = true;
+        "workbench.preferredLightColorTheme" = "Quiet Light";
+        "workbench.preferredDarkColorTheme" = "Catppuccin Frappé";
 
         "remote.SSH" = {
           "externalSSH_ASKPASS" = true;

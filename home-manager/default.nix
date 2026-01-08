@@ -35,6 +35,7 @@
       ncdu
       neofetch
       nix-fast-build
+      nix-inspect
       nix-output-monitor
       nixd
       nixfmt-rfc-style

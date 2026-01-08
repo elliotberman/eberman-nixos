@@ -55,46 +55,45 @@
       "org/gnome/desktop/wm/keybindings" = {
         switch-applications = [ ];
         switch-applications-backward = [ ];
-        "switch-to-workspace-left" = [ "<Control><Super>Left" ];
-        "switch-to-workspace-right" = [ "<Control><Super>Right" ];
-        "switch-windows" = [ "<Alt>Tab" ];
-        "switch-windows-backward" = [ "<Shift><Alt>Tab" ];
+        switch-to-workspace-left = [ "<Control><Super>Left" ];
+        switch-to-workspace-right = [ "<Control><Super>Right" ];
+        switch-windows = [ "<Alt>Tab" ];
+        switch-windows-backward = [ "<Shift><Alt>Tab" ];
       };
 
       "org/gnome/settings-daemon/plugins/media-keys" = {
-        "logout" = [ ];
+        logout = [ ];
       };
 
       "org/gnome/shell/extensions/system-monitor" = {
-        "show-swap" = false;
+        show-swap = false;
       };
 
       "org/gnome/mutter" = {
-        edge-tiling = false;
-        "workspace-on-on-primary" = false;
+        workspace-on-on-primary = false;
         workspaces-only-on-primary = false;
       };
 
       "org/gnome/shell/apps-switcher" = {
-        "current-workspace-only" = true;
+        current-workspace-only = true;
       };
 
       "org/gnome/settings-daemon/plugins/color" = {
-        "night-light-enabled" = true;
+        night-light-enabled = true;
       };
 
       "org/gnome/desktop/interface" = {
-        "clock-format" = "12h";
-        "clock-show-weekday" = true;
+        clock-format = "12h";
+        clock-show-weekday = true;
         show-battery-percentage = true;
       };
 
       "org/gtk/settings/file-chooser" = {
-        "clock-format" = "12h";
+        clock-format = "12h";
       };
 
       "org/gnome/desktop/datetime" = {
-        "automatic-timezone" = true;
+        automatic-timezone = true;
       };
 
       "org/gnome/shell/extensions/tactile" = {
@@ -129,6 +128,14 @@
 
       "org/gnome/system/location" = {
         enabled = true;
+      };
+
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+      };
+
+      "org/gnome/shell/extensions/nightthemeswitcher/time" = {
+        nightthemeswitcher-ondemand-keybinding=["<Shift><Super>d"];
       };
     };
 

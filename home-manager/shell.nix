@@ -69,10 +69,11 @@
     tmux = {
       enable = true;
       plugins = with pkgs.tmuxPlugins; [
-        yank
-        sensible
+        better-mouse-mode
         fingers
+        sensible
         tmux-fzf
+        yank
       ];
       mouse = true;
       keyMode = "vi";

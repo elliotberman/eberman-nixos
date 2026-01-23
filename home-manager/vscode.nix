@@ -31,6 +31,7 @@ in
         rust-lang.rust-analyzer
         tamasfe.even-better-toml
         timonwong.shellcheck
+        tomoki1207.pdf
         wayou.vscode-todo-highlight
       ];
 

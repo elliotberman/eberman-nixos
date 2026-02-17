@@ -31,6 +31,7 @@
         enable = true;
         extensions = with pkgs.gnomeExtensions; [
           { package = appindicator; }
+          { package = emoji-copy; }
           { package = launch-new-instance; }
           { package = native-window-placement; }
           { package = night-theme-switcher; }
@@ -80,6 +81,7 @@
 
       "org/gnome/settings-daemon/plugins/color" = {
         night-light-enabled = true;
+        night-light-schedule-automatic = true;
       };
 
       "org/gnome/desktop/interface" = {

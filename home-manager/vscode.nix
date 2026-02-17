@@ -58,6 +58,7 @@ in
           "textDocument/documentSymbol"
           "textDocument/definition"
         ];
+        "explorer.excludeGitIgnore" = true;
         "path-intellisense.extensionOnImport" = true;
         "window.restoreWindows" = "none";
         "editor.renderWhitespace" = "boundary";

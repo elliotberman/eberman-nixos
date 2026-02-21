@@ -6,6 +6,7 @@
     ./desktop.nix
     ./mail.nix
     ./shell.nix
+    ./git-powertree.nix
 
     vscode-server.homeModules.default
     ./vscode.nix

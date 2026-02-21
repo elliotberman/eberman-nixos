@@ -24,7 +24,7 @@
       ghostty = {
         enable = true;
         enableZshIntegration = true;
-        settings.theme = "Catppuccin Latte";
+        settings.theme = "dark:Catppuccin Frappe,light:Catppuccin Latte";
       };
 
       gnome-shell = {

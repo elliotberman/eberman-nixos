@@ -1,5 +1,5 @@
 { nix-index, vscode-server, ... }:
-{ pkgs, ... }:
+{ pkgs, lib ? pkgs.lib, ... }:
 {
   imports = [
     nix-index.homeModules.nix-index
@@ -115,6 +115,15 @@
            build -L "$drvPath^*" --store "ssh-ng://$remote" --builders "ssh-ng://$remote" --keep-going --print-out-paths
           echo "Built $flakeURI on $remote."
         '';
+      })
+
+      (writeShellApplication {
+        name = "nor";
+        runtimeInputs  = [
+          jq
+          nix-output-monitor
+        ];
+        text = lib.fileContents ./scripts/nor.bash;
       })
     ];
   };

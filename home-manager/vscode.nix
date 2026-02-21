@@ -15,7 +15,6 @@ in
         arrterian.nix-env-selector
         catppuccin.catppuccin-vsc
         christian-kohler.path-intellisense
-        eamodio.gitlens
         editorconfig.editorconfig
         github.vscode-pull-request-github
         jaycetyle.vscode-gnu-global
@@ -90,6 +89,8 @@ in
           "lockfilesInTmp" = true;
           "configFile" = "/home/eberman/.vscode/ssh_config";
         };
+
+        "git.blame.editorDecoration.enabled" = true;
       };
     };
   };

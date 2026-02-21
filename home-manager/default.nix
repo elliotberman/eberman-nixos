@@ -1,5 +1,9 @@
 { nix-index, vscode-server, ... }:
-{ pkgs, lib ? pkgs.lib, ... }:
+{
+  pkgs,
+  lib ? pkgs.lib,
+  ...
+}:
 {
   imports = [
     nix-index.homeModules.nix-index
@@ -120,7 +124,7 @@
 
       (writeShellApplication {
         name = "nor";
-        runtimeInputs  = [
+        runtimeInputs = [
           jq
           nix-output-monitor
         ];

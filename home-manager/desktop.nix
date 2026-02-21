@@ -137,7 +137,7 @@
       };
 
       "org/gnome/shell/extensions/nightthemeswitcher/time" = {
-        nightthemeswitcher-ondemand-keybinding=["<Shift><Super>d"];
+        nightthemeswitcher-ondemand-keybinding = [ "<Shift><Super>d" ];
       };
     };
 

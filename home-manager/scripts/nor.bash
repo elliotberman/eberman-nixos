@@ -4,7 +4,7 @@ usage() {
   cat <<EOF
 nor - A wrapper around "nom build" that also runs the resulting output
 
-Usage: nor [--pname NAME] [--target-host HOST] [--copy-to HOST] [--sudo] [NOM_BUILD_ARGS] -- [RUN_ARGS]
+Usage: nor [--pname NAME] [--target-host HOST] [--copy-to HOST] [--sudo] [--as] [--user USER] [--no-check-sigs] [NOM_BUILD_ARGS] -- [RUN_ARGS]
 
 Arguments:
   --pname NAME       Specify the package name to run. If not specified,
@@ -13,6 +13,9 @@ Arguments:
   --copy-to HOST     Copy the result to the specified remote host (defaults to target-host if specified).
                     If only --copy-to is specified (no --target-host), will only copy and not execute.
   --sudo            Run the command with sudo
+  --as              Use nix-copy-as instead of nix copy for copying
+  --user USER       Remote username for nix-copy-as (implies --as)
+  --no-check-sigs   Disable signature checking with nix-copy-as (implies --as)
   NOM_BUILD_ARGS     Arguments passed directly to "nom build"
   -- RUN_ARGS        Arguments passed to the executable after --
 
@@ -21,6 +24,8 @@ Example:
   nor --target-host server1 --pname my-tool # Build, copy to server1, and run on server1
   nor --copy-to server1 --pname my-tool     # Just copy to server1, don't execute
   nor --sudo ./default.nix -- arg1 arg2     # Build and run locally with sudo
+  nor --as --copy-to server1 --pname my-tool # Copy using nix-copy-as
+  nor --user alice --copy-to server1 --pname my-tool # Copy as user alice
 EOF
   exit 1
 }
@@ -30,6 +35,9 @@ pname=""
 target_host=""
 copy_to_host=""
 sudo_prefix=""
+use_nix_copy_as=""
+remote_user=""
+no_check_sigs=""
 nom_build_args=()
 run_args=()
 
@@ -61,6 +69,24 @@ while [[ $# -gt 0 ]]; do
       ;;
     --sudo)
       sudo_prefix="sudo"
+      shift
+      ;;
+    --as)
+      use_nix_copy_as="yes"
+      shift
+      ;;
+    --user)
+      if [[ -z "$2" || "$2" == --* ]]; then
+        echo "Error: --user requires a value"
+        usage
+      fi
+      remote_user="$2"
+      use_nix_copy_as="yes"
+      shift 2
+      ;;
+    --no-check-sigs)
+      no_check_sigs="yes"
+      use_nix_copy_as="yes"
       shift
       ;;
     --help)
@@ -103,9 +129,29 @@ copy_to_host="${copy_to_host:-"$target_host"}"
 
 if [[ -n "$copy_to_host" ]]; then
   echo "Copying $build_result to $copy_to_host"
-  if ! nix copy --to "ssh://$copy_to_host" "$build_result"; then
-    echo "Error: Failed to copy build result to $copy_to_host"
-    exit 1
+
+  if [[ -n "$use_nix_copy_as" ]]; then
+    copy_cmd=(nix-copy-as --to "$copy_to_host")
+
+    if [[ -n "$remote_user" ]]; then
+      copy_cmd+=(--user "$remote_user")
+    fi
+
+    if [[ -n "$no_check_sigs" ]]; then
+      copy_cmd+=(--no-check-sigs)
+    fi
+
+    copy_cmd+=("$build_result")
+
+    if ! "${copy_cmd[@]}"; then
+      echo "Error: Failed to copy build result to $copy_to_host"
+      exit 1
+    fi
+  else
+    if ! nix copy --to "ssh://$copy_to_host" "$build_result"; then
+      echo "Error: Failed to copy build result to $copy_to_host"
+      exit 1
+    fi
   fi
 
   if [[ -z "$target_host" ]]; then

@@ -117,7 +117,7 @@
           echo "Copied $drvPath to $remote."
 
           echo "Building $drvPath^* on $remote..."
-           build -L "$drvPath^*" --store "ssh-ng://$remote" --builders "ssh-ng://$remote" --keep-going --print-out-paths
+          nix build -L "$drvPath^*" --store "ssh-ng://$remote" --builders "ssh-ng://$remote" --keep-going --print-out-paths
           echo "Built $flakeURI on $remote."
         '';
       })
@@ -129,6 +129,18 @@
           nix-output-monitor
         ];
         text = lib.fileContents ./scripts/nor.bash;
+      })
+
+      (writeShellApplication {
+        name = "nix-copy-as";
+        runtimeInputs = [
+          lsof
+          nix
+          nix-output-monitor
+          nix-serve-ng
+          openssh
+        ];
+        text = lib.fileContents ./scripts/nix-copy-as.bash;
       })
     ];
   };

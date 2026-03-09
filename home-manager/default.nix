@@ -37,14 +37,17 @@
       llvmPackages.libllvm
       ltrace
       moreutils
+      nbr
       ncdu
       neofetch
+      nix-copy-as
       nix-fast-build
       nix-inspect
       nix-output-monitor
       nixd
       nixfmt-rfc-style
       nnn
+      nor
       oh-my-zsh
       parted
       qdirstat
@@ -93,36 +96,6 @@
           rm -- *TAGS || true
           make ARCH=arm64 gtags
         '';
-      })
-
-      (writeShellApplication {
-        # Build on any remote machine which is ssh-able.
-        name = "nbr";
-        runtimeInputs = [
-          nix-output-monitor
-        ];
-        text = lib.fileContents ./scripts/nbr.bash;
-      })
-
-      (writeShellApplication {
-        name = "nor";
-        runtimeInputs = [
-          jq
-          nix-output-monitor
-        ];
-        text = lib.fileContents ./scripts/nor.bash;
-      })
-
-      (writeShellApplication {
-        name = "nix-copy-as";
-        runtimeInputs = [
-          lsof
-          nix
-          nix-output-monitor
-          nix-serve-ng
-          openssh
-        ];
-        text = lib.fileContents ./scripts/nix-copy-as.bash;
       })
     ];
   };

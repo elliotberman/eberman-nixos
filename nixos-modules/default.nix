@@ -1,5 +1,14 @@
-{ home-manager, nix-vscode-extensions, ... }@flakeInputs:
-{ pkgs, config, ... }:
+{
+  home-manager,
+  nix-vscode-extensions,
+  nix-remote-utils,
+  ...
+}@flakeInputs:
+{
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [
     home-manager.nixosModules.home-manager
@@ -8,6 +17,7 @@
   ];
 
   nixpkgs.overlays = [
+    nix-remote-utils.overlays.default
     nix-vscode-extensions.overlays.default
   ];
 

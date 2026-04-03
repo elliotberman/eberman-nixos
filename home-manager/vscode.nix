@@ -13,6 +13,7 @@ in
     profiles.default = {
       extensions = with extensions; [
         arrterian.nix-env-selector
+        bitwisecook.tcl
         catppuccin.catppuccin-vsc
         christian-kohler.path-intellisense
         editorconfig.editorconfig
@@ -91,6 +92,7 @@ in
         };
 
         "git.blame.editorDecoration.enabled" = true;
+        "githubPullRequests.commentExpandState" = "collapseAll";
       };
     };
   };

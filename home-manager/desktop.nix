@@ -34,7 +34,6 @@
           { package = emoji-copy; }
           { package = launch-new-instance; }
           { package = native-window-placement; }
-          { package = night-theme-switcher; }
           { package = removable-drive-menu; }
           { package = status-icons; }
           { package = system-monitor; }

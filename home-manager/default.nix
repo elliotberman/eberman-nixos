@@ -40,6 +40,7 @@
       nbr
       ncdu
       neofetch
+      nethogs
       nix-copy-as
       nix-fast-build
       nix-inspect

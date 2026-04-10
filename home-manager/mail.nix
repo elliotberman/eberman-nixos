@@ -10,11 +10,20 @@ in
 
     notmuch = {
       inherit enable;
+
+      hooks.postNew = ''
+        notmuch tag +anduril -- folder:/anduril/
+      '';
     };
 
     neomutt = {
       inherit enable;
     };
+  };
+
+  services.mbsync = {
+    inherit enable;
+    frequency = "00/4:00";
   };
 
   accounts.email.accounts.elliotjb = {
@@ -28,14 +37,11 @@ in
 
     mbsync = {
       enable = true;
+      create = "maildir";
     };
 
     notmuch = {
       neomutt.enable = true;
-      enable = true;
-    };
-
-    neomutt = {
       enable = true;
     };
 

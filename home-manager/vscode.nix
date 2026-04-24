@@ -84,6 +84,7 @@ in
         "window.autoDetectColorScheme" = true;
         "workbench.preferredLightColorTheme" = "Quiet Light";
         "workbench.preferredDarkColorTheme" = "Catppuccin Frappé";
+        "workbench.secondarySideBar.defaultVisibility" = "hidden";
 
         "remote.SSH" = {
           "externalSSH_ASKPASS" = true;

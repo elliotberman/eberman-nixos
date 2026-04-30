@@ -13,6 +13,7 @@
         rust.disabled = true;
         shell.disabled = false;
         shell.zsh_indicator = "";
+        username.disabled = true;
 
         direnv = {
           disabled = false;
@@ -57,6 +58,7 @@
 
       envExtra = ''
         HKML_DIR=/home/eberman/.cache/hkm
+        ZSH_TMUX_AUTOREFRESH=true
       '';
     };
 

@@ -18,6 +18,34 @@ in
 
     neomutt = {
       inherit enable;
+
+      binds = [
+        {
+          map = "index";
+          action = "sidebar-prev";
+          key = "<left>";
+        }
+        {
+          map = "index";
+          action = "sidebar-next";
+          key = "<right>";
+        }
+        {
+          map = "index";
+          action = "sidebar-open";
+          key = "<space>";
+        }
+      ];
+
+      vimKeys = true;
+
+      sidebar = {
+        enable = true;
+      };
+
+      extraConfig = ''
+
+      '';
     };
   };
 
@@ -41,7 +69,19 @@ in
     };
 
     notmuch = {
-      neomutt.enable = true;
+      neomutt = {
+        enable = true;
+        virtualMailboxes = [
+          {
+            name = "INBOX";
+            query = "tag:inbox";
+          }
+        ];
+      };
+      enable = true;
+    };
+
+    neomutt = {
       enable = true;
     };
 

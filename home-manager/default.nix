@@ -99,6 +99,8 @@
           make ARCH=arm64 gtags
         '';
       })
+
+      (pkgs.linkFarm "code-connect" { "bin/code-connect" = lib.getExe (pkgs.callPackage ./code-connect.nix { }); })
     ];
   };
 

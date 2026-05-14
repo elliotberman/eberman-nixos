@@ -100,7 +100,9 @@
         '';
       })
 
-      (pkgs.linkFarm "code-connect" { "bin/code-connect" = lib.getExe (pkgs.callPackage ./code-connect.nix { }); })
+      (pkgs.linkFarm "code-connect" {
+        "bin/code-connect" = lib.getExe (pkgs.callPackage ./code-connect.nix { });
+      })
     ];
   };
 

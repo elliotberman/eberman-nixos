@@ -72,9 +72,14 @@
       enable = true;
       plugins = with pkgs.tmuxPlugins; [
         better-mouse-mode
+        {
+          plugin = dotbar;
+          extraConfig = ''
+            set -g @tmux-dotbar-right true
+          '';
+        }
         fingers
         sensible
-        tmux-fzf
         yank
       ];
       mouse = true;

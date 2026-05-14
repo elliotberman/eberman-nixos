@@ -61,6 +61,13 @@
         default = import ./nixos-modules flakeInputs;
       };
 
+      homeConfigurations = {
+        eberman = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ (import ./home-manager flakeInputs) ];
+        };
+      };
+
       nixosConfigurations = {
         wslx86_64 = nixpkgs.lib.nixosSystem {
           modules = [

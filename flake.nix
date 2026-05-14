@@ -63,7 +63,13 @@
 
       homeConfigurations = {
         eberman = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [
+              flakeInputs.nix-remote-utils.overlays.default
+              flakeInputs.nix-vscode-extensions.overlays.default
+            ];
+          };
           modules = [ (import ./home-manager flakeInputs) ];
         };
       };

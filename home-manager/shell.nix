@@ -76,6 +76,10 @@
           plugin = dotbar;
           extraConfig = ''
             set -g @tmux-dotbar-right true
+
+            set -g allow-passthrough on
+            set -s extended-keys on
+            set -as terminal-features 'xterm*:extkeys'
           '';
         }
         fingers

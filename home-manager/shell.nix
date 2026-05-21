@@ -80,6 +80,8 @@
             set -g allow-passthrough on
             set -s extended-keys on
             set -as terminal-features 'xterm*:extkeys'
+
+            set -g update-environment "DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
           '';
         }
         fingers

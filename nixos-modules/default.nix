@@ -32,6 +32,7 @@
     };
     zsh.enable = true;
     adb.enable = true;
+    ssh.setXAuthLocation = true;
   };
 
   services = {

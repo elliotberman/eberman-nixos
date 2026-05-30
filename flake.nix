@@ -55,6 +55,13 @@
     let
       forEachSystem =
         f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
+
+      generatePkgs =
+        pkgs:
+        nixpkgs.lib.filesystem.packagesFromDirectoryRecursive {
+          inherit (pkgs) callPackage;
+          directory = ./pkgs;
+        };
     in
     {
       nixosModules = {
@@ -83,6 +90,10 @@
           ];
         };
       };
+
+      overlays.default = pkgs: _: generatePkgs pkgs;
+
+      legacyPackages = forEachSystem generatePkgs;
 
       formatter = forEachSystem (
         pkgs:

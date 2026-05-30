@@ -11,7 +11,6 @@
     ./desktop.nix
     ./mail.nix
     ./shell.nix
-    ./git-powertree.nix
 
     vscode-server.homeModules.default
     ./vscode.nix
@@ -21,8 +20,8 @@
     homeDirectory = "/home/eberman";
 
     packages = with pkgs; [
-      bitwise
       binutils
+      bitwise
       cloc
       dtc
       file
@@ -30,12 +29,14 @@
       gawk
       git-absorb
       git-credential-manager
+      git-powertree
       global
       gnupg
+      hkml
       htop
       jq
-      lshw
       llvmPackages.libllvm
+      lshw
       ltrace
       moreutils
       nbr
@@ -70,26 +71,6 @@
       zstd
 
       (writeShellApplication {
-        name = "hkml";
-        runtimeInputs = [
-          git
-          python3
-        ];
-        text =
-          let
-            src = fetchFromGitHub {
-              owner = "sjp38";
-              repo = "hackermail";
-              tag = "v1.4.3";
-              hash = "sha256-1r7sDugXODvvSZchVRTrxAzUM0126p8lzbGqKLurKIA=";
-            };
-          in
-          ''
-            python "${src}/src/hkml.py" "$@"
-          '';
-      })
-
-      (writeShellApplication {
         name = "kerntags";
         runtimeInputs = [
           pkgsCross.aarch64-multiplatform.buildPackages.stdenv
@@ -101,7 +82,7 @@
       })
 
       (pkgs.linkFarm "code-connect" {
-        "bin/code-connect" = lib.getExe (pkgs.callPackage ./code-connect.nix { });
+        "bin/code-connect" = lib.getExe pkgs.code-connect;
       })
     ];
   };

@@ -51,6 +51,8 @@
         glf = "git logfix";
         glfh = "git --no-pager logfix -n1";
         gloh = "git --no-pager log --oneline -n10";
+        gpta = "git powertree-add";
+        gptr = "git powertree-register";
       };
 
       syntaxHighlighting.enable = true;

@@ -2,6 +2,7 @@
   home-manager,
   nix-vscode-extensions,
   nix-remote-utils,
+  self,
   ...
 }@flakeInputs:
 {
@@ -19,6 +20,7 @@
   nixpkgs.overlays = [
     nix-remote-utils.overlays.default
     nix-vscode-extensions.overlays.default
+    self.overlays.default
   ];
 
   users.mutableUsers = false;

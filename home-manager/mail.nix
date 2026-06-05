@@ -21,17 +21,17 @@ in
 
       binds = [
         {
-          map = "index";
+          map = [ "index" ];
           action = "sidebar-prev";
           key = "<left>";
         }
         {
-          map = "index";
+          map = [ "index" ];
           action = "sidebar-next";
           key = "<right>";
         }
         {
-          map = "index";
+          map = [ "index" ];
           action = "sidebar-open";
           key = "<space>";
         }

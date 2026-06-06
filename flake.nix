@@ -2,15 +2,15 @@
   description = "Elliot's nixos config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions/1e8d405f9f005be96d5a5f44d4096c17915a399d";
+    nix4vscode = {
+      url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -74,7 +74,7 @@
             system = "x86_64-linux";
             overlays = [
               flakeInputs.nix-remote-utils.overlays.default
-              flakeInputs.nix-vscode-extensions.overlays.default
+              flakeInputs.nix4vscode.overlays.default
             ];
           };
           modules = [ (import ./home-manager flakeInputs) ];

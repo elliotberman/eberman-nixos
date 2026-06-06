@@ -41,14 +41,12 @@
       moreutils
       nbr
       ncdu
-      neofetch
       nethogs
       nix-copy-as
       nix-fast-build
       nix-inspect
       nix-output-monitor
       nixd
-      nixfmt-rfc-style
       nnn
       nor
       oh-my-zsh
@@ -135,20 +133,18 @@
       enable = true;
 
       enableDefaultConfig = false;
-      matchBlocks."*" = {
-        forwardAgent = false;
-        addKeysToAgent = "no";
-        serverAliveInterval = 20;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
+      settings."*" = {
+        ForwardAgent = false;
+        AddKeysToAgent = "no";
+        ServerAliveInterval = 20;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
 
-        controlMaster = "auto";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-        controlPersist = "5s";
+        ControlMaster = "auto";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "5s";
 
-        extraOptions = {
-          WarnWeakCrypto = "no";
-        };
+        WarnWeakCrypto = "no";
       };
     };
   };

@@ -1,6 +1,6 @@
 {
   home-manager,
-  nix-vscode-extensions,
+  nix4vscode,
   nix-remote-utils,
   self,
   ...
@@ -19,7 +19,7 @@
 
   nixpkgs.overlays = [
     nix-remote-utils.overlays.default
-    nix-vscode-extensions.overlays.default
+    nix4vscode.overlays.default
     self.overlays.default
   ];
 
@@ -33,7 +33,6 @@
       defaultEditor = true;
     };
     zsh.enable = true;
-    adb.enable = true;
     ssh.setXAuthLocation = true;
   };
 

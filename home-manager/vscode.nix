@@ -1,38 +1,29 @@
-{ pkgs, config, ... }:
-let
-  vscode = config.programs.vscode.package;
-  nix-vscode-extensions' = pkgs.nix-vscode-extensions;
-  extensions-latest = nix-vscode-extensions'.vscode-marketplace;
-  extensions-compat =
-    (nix-vscode-extensions'.forVSCodeVersion vscode.version).vscode-marketplace-release;
-  extensions = extensions-latest // extensions-compat;
-in
+{ pkgs, ... }:
 {
   programs.vscode = {
     mutableExtensionsDir = false;
     profiles.default = {
-      extensions = with extensions; [
-        arrterian.nix-env-selector
-        bitwisecook.tcl
-        catppuccin.catppuccin-vsc
-        christian-kohler.path-intellisense
-        editorconfig.editorconfig
-        github.vscode-pull-request-github
-        jaycetyle.vscode-gnu-global
-        jlevere.elfpreview
-        jnoortheen.nix-ide
-        johnpapa.vscode-peacock
-        legale.dts-formatter
-        luveti.kconfig
-        mkhl.direnv
-        ms-vscode-remote.remote-ssh
-        ms-vscode.remote-explorer
-        plorefice.devicetree
-        rust-lang.rust-analyzer
-        tamasfe.even-better-toml
-        timonwong.shellcheck
-        tomoki1207.pdf
-        wayou.vscode-todo-highlight
+      extensions = pkgs.nix4vscode.forVscode [
+        "arrterian.nix-env-selector"
+        "catppuccin.catppuccin-vsc"
+        "christian-kohler.path-intellisense"
+        "editorconfig.editorconfig"
+        "github.vscode-pull-request-github"
+        "jaycetyle.vscode-gnu-global"
+        "jlevere.elfpreview"
+        "jnoortheen.nix-ide"
+        "johnpapa.vscode-peacock"
+        "legale.dts-formatter"
+        "luveti.kconfig"
+        "mkhl.direnv"
+        "ms-vscode-remote.remote-ssh"
+        "ms-vscode.remote-explorer"
+        "plorefice.devicetree"
+        "rust-lang.rust-analyzer"
+        "tamasfe.even-better-toml"
+        "timonwong.shellcheck"
+        "tomoki1207.pdf"
+        "wayou.vscode-todo-highlight"
       ];
 
       enableUpdateCheck = false;

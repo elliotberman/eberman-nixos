@@ -13,7 +13,6 @@
       diffoscope
       gdmap
       gnome-tweaks
-      gnomeExtensions.system-monitor
       krita
       meld
     ];
@@ -36,7 +35,6 @@
           { package = native-window-placement; }
           { package = removable-drive-menu; }
           { package = status-icons; }
-          { package = system-monitor; }
           { package = tactile; }
         ];
       };
@@ -63,10 +61,6 @@
 
       "org/gnome/settings-daemon/plugins/media-keys" = {
         logout = [ ];
-      };
-
-      "org/gnome/shell/extensions/system-monitor" = {
-        show-swap = false;
       };
 
       "org/gnome/mutter" = {

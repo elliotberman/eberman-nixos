@@ -23,16 +23,21 @@
       ghostty = {
         enable = true;
         enableZshIntegration = true;
-        settings.theme = "dark:Catppuccin Frappe,light:Catppuccin Latte";
+        settings = {
+          theme = "dark:Catppuccin Frappe,light:Catppuccin Latte";
+          gtk-titlebar-style = "tabs";
+        };
       };
 
       gnome-shell = {
         enable = true;
         extensions = with pkgs.gnomeExtensions; [
+          { package = advanced-alttab-window-switcher; }
           { package = appindicator; }
           { package = emoji-copy; }
           { package = launch-new-instance; }
           { package = native-window-placement; }
+          { package = night-theme-switcher; }
           { package = removable-drive-menu; }
           { package = status-icons; }
           { package = tactile; }
@@ -131,6 +136,16 @@
 
       "org/gnome/shell/extensions/nightthemeswitcher/time" = {
         nightthemeswitcher-ondemand-keybinding = [ "<Shift><Super>d" ];
+      };
+
+      "org/gnome/shell/extensions/advanced-alt-tab-window-switcher" = {
+        switcher-popup-preview-selected = 2;
+        switcher-popup-monitor = 3;
+        switcher-popup-timeout = 0;
+        win-switcher-popup-filter = 2;
+        win-switcher-popup-sorting = 1;
+        win-switcher-popup-order = 1;
+        win-switcher-popup-ws-indexes = false;
       };
     };
 

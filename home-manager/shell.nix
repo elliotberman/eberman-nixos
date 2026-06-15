@@ -103,7 +103,7 @@
             # NB: no commas inside #[...] here — dotbar nests this in
             # #{?client_prefix,...,} and tmux splits the conditional on commas.
             set -g status-left-length 100
-            set -g @tmux-dotbar-session-text " #[nodim]#S#[dim] on #H "
+            set -g @tmux-dotbar-session-text " #[nodim]#S#[dim] on #([ -n \"$SSH_CONNECTION\" ] && echo -n \"#[nodim]󰌘#[dim] \")#H "
 
             # Right: live CPU / memory / network / disk metrics.
             set -g status-right-length 100
@@ -126,6 +126,16 @@
       historyLimit = 100000;
       extraConfig = ''
         set -g set-titles on
+
+        # Status bar at the top with a horizontal rule beneath it (like the
+        # border between stacked panes). tmux orders status-format top-to-bottom
+        # (index 0 = topmost), so the dotbar bar stays in the default
+        # status-format[0] and we only add the rule as status-format[1]. The
+        # rule is a long run of ─ that tmux clips to the client width (status
+        # lines are single-line, never wrapped), so it adapts to any size.
+        set -g status-position top
+        set -g status 2
+        set -g 'status-format[1]' "#[fg=default,dim]${lib.concatStrings (lib.replicate 400 "─")}"
 
         set -g allow-passthrough on
         set -s extended-keys on

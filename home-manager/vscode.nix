@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.vscode = {
     mutableExtensionsDir = false;
@@ -20,6 +20,7 @@
         "ms-vscode.remote-explorer"
         "plorefice.devicetree"
         "rust-lang.rust-analyzer"
+        "ryanluker.vscode-coverage-gutters"
         "tamasfe.even-better-toml"
         "timonwong.shellcheck"
         "tomoki1207.pdf"
@@ -81,6 +82,7 @@
           "externalSSH_ASKPASS" = true;
           "lockfilesInTmp" = true;
           "configFile" = "/home/eberman/.vscode/ssh_config";
+          "defaultExtensions" = builtins.map (ext: ext.vscodeExtUniqueId) config.programs.vscode.profiles.default.extensions;
         };
 
         "git.blame.editorDecoration.enabled" = true;

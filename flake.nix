@@ -62,6 +62,10 @@
           inherit (pkgs) callPackage;
           directory = ./pkgs;
         };
+
+      overlay =
+        final: prev:
+        generatePkgs final // import ./pkgs-overlays/geoclue2.nix final prev;
     in
     {
       nixosModules = {
@@ -91,9 +95,9 @@
         };
       };
 
-      overlays.default = pkgs: _: generatePkgs pkgs;
+      overlays.default = overlay;
 
-      legacyPackages = forEachSystem generatePkgs;
+      legacyPackages = forEachSystem (pkgs: overlay pkgs pkgs);
 
       formatter = forEachSystem (
         pkgs:

@@ -7,6 +7,7 @@
 }@flakeInputs:
 {
   pkgs,
+  lib,
   config,
   ...
 }:
@@ -49,6 +50,16 @@
     '';
   };
 
+  # geoclue2 overridden to 2.8.1 (nixpkgs PR#519210, unmerged) for [ip] method=,
+  # since wifi geolocation isn't always reliable. See ../pkgs-overlays/geoclue2.nix.
+  environment.etc = lib.mkIf config.services.geoclue2.enable {
+    "geoclue/conf.d/90-ip.conf".text = ''
+      [ip]
+      enable=true
+      method=reallyfreegeoip
+    '';
+  };
+
   environment.enableAllTerminfo = true;
   environment.systemPackages = with pkgs; [
     python3
@@ -57,7 +68,14 @@
 
   time.timeZone = "America/Los_Angeles";
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    settings.connectivity = {
+      uri = "http://fedoraproject.org/static/hotspot.txt";
+      response = "OK";
+      interval = 300;
+    };
+  };
 
   virtualisation = {
     docker.enable = true;

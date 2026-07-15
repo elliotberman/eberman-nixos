@@ -37,6 +37,9 @@
     ssh.setXAuthLocation = true;
   };
 
+  # Unlink stale ~/.opener.sock on bind so opener's SSH RemoteForward survives reconnects.
+  services.openssh.settings.StreamLocalBindUnlink = "yes";
+
   services = {
     udev.extraRules = ''
       # For Jetson AGX Orin Dev Kit board automation

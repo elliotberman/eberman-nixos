@@ -82,7 +82,9 @@
           "externalSSH_ASKPASS" = true;
           "lockfilesInTmp" = true;
           "configFile" = "/home/eberman/.vscode/ssh_config";
-          "defaultExtensions" = builtins.map (ext: ext.vscodeExtUniqueId) config.programs.vscode.profiles.default.extensions;
+          "defaultExtensions" = builtins.map (
+            ext: ext.vscodeExtUniqueId
+          ) config.programs.vscode.profiles.default.extensions;
         };
 
         "git.blame.editorDecoration.enabled" = true;

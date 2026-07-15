@@ -1,10 +1,11 @@
-{ cargo
-, clippy
-, mkShell
-, rust-analyzer-unwrapped
-, rustfmt
-, rustc
-, rustPlatform
+{
+  cargo,
+  clippy,
+  mkShell,
+  rust-analyzer-unwrapped,
+  rustfmt,
+  rustc,
+  rustPlatform,
 }:
 rustPlatform.buildRustPackage {
   pname = "tmux-status";

@@ -11,6 +11,7 @@
     ./desktop.nix
     ./mail.nix
     ./shell.nix
+    ./opener.nix
 
     vscode-server.homeModules.default
     ./vscode.nix

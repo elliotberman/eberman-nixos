@@ -11,7 +11,7 @@ final: prev: {
       hash = "sha256-0UKMOtalFUbJswBZIWb4AxubjDxHdNYZDtk29VyXMdE=";
     };
 
-    mesonFlags = prevAttrs.mesonFlags or [] ++ [
+    mesonFlags = prevAttrs.mesonFlags or [ ] ++ [
       "-Dsystemd-sysusers-dir=${placeholder "out"}/lib/sysusers.d"
     ];
   });

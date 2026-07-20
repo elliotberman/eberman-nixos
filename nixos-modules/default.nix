@@ -71,14 +71,7 @@
 
   time.timeZone = "America/Los_Angeles";
 
-  networking.networkmanager = {
-    enable = true;
-    settings.connectivity = {
-      uri = "http://fedoraproject.org/static/hotspot.txt";
-      response = "OK";
-      interval = 300;
-    };
-  };
+  networking.networkmanager.enable = true;
 
   virtualisation = {
     docker.enable = true;

@@ -70,7 +70,9 @@
           "editor.tabSize" = 4;
           "editor.formatOnSave" = true;
         };
+        # OMG Microsoft. Stop changing the setting every month.
         "chat.agent.enabled" = false;
+        "chat.disableAIFeatures" = true;
         "chat.commandCenter.enabled" = false;
 
         "window.autoDetectColorScheme" = true;

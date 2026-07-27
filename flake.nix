@@ -63,7 +63,7 @@
           directory = ./pkgs;
         };
 
-      overlay = final: prev: generatePkgs final // import ./pkgs-overlays/geoclue2.nix final prev;
+      overlay = final: prev: generatePkgs final; # // import ./pkgs-overlays/geoclue2.nix final prev;
     in
     {
       nixosModules = {

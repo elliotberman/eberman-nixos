@@ -70,6 +70,10 @@
         default = import ./nixos-modules flakeInputs;
       };
 
+      homeModules = {
+        eberman = import ./home-manager flakeInputs;
+      };
+
       homeConfigurations = {
         eberman = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
@@ -77,9 +81,10 @@
             overlays = [
               flakeInputs.nix-remote-utils.overlays.default
               flakeInputs.nix4vscode.overlays.default
+              flakeInputs.self.overlays.default
             ];
           };
-          modules = [ (import ./home-manager flakeInputs) ];
+          modules = [ self.homeModules.eberman ];
         };
       };
 

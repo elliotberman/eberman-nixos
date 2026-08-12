@@ -35,6 +35,26 @@ in
           action = "sidebar-open";
           key = "<space>";
         }
+        {
+          map = [ "pager" "index" ];
+          action = "group-reply";
+          key = "r";
+        }
+        {
+          map = [ "pager" "index" ];
+          action = "reply";
+          key = "R";
+        }
+        {
+          map = [ "index" ];
+          action = "entire-thread";
+          key = "+";
+        }
+        {
+          map = [ "index" ];
+          action = "display-message";
+          key = "enter";
+        }
       ];
 
       vimKeys = true;
@@ -44,7 +64,7 @@ in
       };
 
       extraConfig = ''
-
+        set fast_reply = yes
       '';
     };
   };

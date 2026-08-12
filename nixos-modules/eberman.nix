@@ -21,7 +21,7 @@ flakeInputs:
     ];
   };
 
-  home-manager.users.eberman = (import ../home-manager flakeInputs);
+  home-manager.users.eberman = flakeInputs.self.homeModules.eberman;
 
   programs._1password-gui.polkitPolicyOwners = [ "eberman" ];
   nix.settings.trusted-users = [ "eberman" ];

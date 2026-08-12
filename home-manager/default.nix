@@ -21,6 +21,7 @@
     homeDirectory = "/home/eberman";
 
     packages = with pkgs; [
+      b4
       binutils
       bitwise
       cloc

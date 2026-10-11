@@ -4,9 +4,11 @@
     mutableExtensionsDir = false;
     profiles.default = {
       extensions = pkgs.nix4vscode.forVscode [
+        "13xforever.language-x86-64-assembly"
         "arrterian.nix-env-selector"
         "catppuccin.catppuccin-vsc"
         "christian-kohler.path-intellisense"
+        "dan-c-underwood.arm"
         "editorconfig.editorconfig"
         "github.vscode-pull-request-github"
         "jaycetyle.vscode-gnu-global"

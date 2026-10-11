@@ -86,6 +86,13 @@
       };
 
       nixosConfigurations = {
+        vmx86_64 = nixpkgs.lib.nixosSystem {
+          modules = [
+            self.nixosModules.default
+            ./vm-x86_64
+          ];
+        };
+
         wslx86_64 = nixpkgs.lib.nixosSystem {
           modules = [
             self.nixosModules.default

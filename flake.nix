@@ -24,8 +24,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -94,6 +96,14 @@
             self.nixosModules.default
             nixos-wsl.nixosModules.default
             ./wsl-x86_64
+          ];
+        };
+
+        thinkpadYoga = nixpkgs.lib.nixosSystem {
+          modules = [
+            self.nixosModules.default
+            flakeInputs.disko.nixosModules.default
+            ./thinkpad_yoga
           ];
         };
       };

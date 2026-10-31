@@ -26,11 +26,6 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-remote-utils = {
       url = "github:elliotberman/nix-remote-utils";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -102,7 +97,6 @@
         thinkpadYoga = nixpkgs.lib.nixosSystem {
           modules = [
             self.nixosModules.default
-            flakeInputs.disko.nixosModules.default
             ./thinkpad_yoga
           ];
         };

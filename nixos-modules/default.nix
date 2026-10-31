@@ -15,7 +15,7 @@
   imports = [
     home-manager.nixosModules.home-manager
     (import ./eberman.nix flakeInputs)
-    ./desktop.nix
+    (import ./desktop.nix flakeInputs)
   ];
 
   nixpkgs.overlays = [

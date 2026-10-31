@@ -1,10 +1,18 @@
 {
+  noctalia,
+  ...
+}@flakeInputs:
+{
   pkgs,
   lib,
   config,
   ...
 }:
 {
+  imports = [
+    noctalia.homeModules.default
+  ];
+
   options.eberman.enableDesktop = lib.mkEnableOption "Enable graphical programs";
 
   config = lib.mkIf config.eberman.enableDesktop {
@@ -12,7 +20,6 @@
       chromium
       diffoscope
       gdmap
-      gnome-tweaks
       krita
       meld
     ];
@@ -29,125 +36,117 @@
         };
       };
 
-      gnome-shell = {
+      noctalia = {
         enable = true;
-        extensions = with pkgs.gnomeExtensions; [
-          { package = advanced-alttab-window-switcher; }
-          { package = appindicator; }
-          { package = emoji-copy; }
-          { package = launch-new-instance; }
-          { package = native-window-placement; }
-          { package = night-theme-switcher; }
-          { package = removable-drive-menu; }
-          { package = status-icons; }
-          { package = tactile; }
-        ];
       };
     };
 
-    dconf.settings = {
-      "org/gnome/shell" = {
-        disable-user-extensions = false;
-        favorite-apps = [
-          "chromium-browser.desktop"
-          "com.mitchellh.ghostty.desktop"
-          "code.desktop"
-        ];
-      };
+    wayland.windowManager.hyprland = {
+      enable = true;
+      configType = "lua";
+      extraConfig = ''
+        -- Fallback monitor rule
+        hl.monitor({
+          output = "",
+          mode = "preferred",
+          position = "auto",
+          scale = "auto",
+        })
 
-      "org/gnome/desktop/wm/keybindings" = {
-        switch-applications = [ ];
-        switch-applications-backward = [ ];
-        switch-to-workspace-left = [ "<Control><Super>Left" ];
-        switch-to-workspace-right = [ "<Control><Super>Right" ];
-        switch-windows = [ "<Alt>Tab" ];
-        switch-windows-backward = [ "<Shift><Alt>Tab" ];
-      };
+        -- General appearance & decoration
+        hl.config({
+          general = {
+            gaps_in = 5,
+            gaps_out = 10,
+          },
+          decoration = {
+            rounding = 12,
+            blur = {
+              enabled = true,
+              xray = true,
+              size = 3,
+              passes = 2,
+            },
+          },
+        })
 
-      "org/gnome/settings-daemon/plugins/media-keys" = {
-        logout = [ ];
-      };
+        -- Autostart Noctalia Shell
+        hl.on("hyprland.start", function()
+          hl.exec_cmd("noctalia")
+        end)
 
-      "org/gnome/mutter" = {
-        workspace-on-on-primary = false;
-        workspaces-only-on-primary = false;
-      };
+        local mainMod = "SUPER"
+        local ipc = "noctalia msg "
 
-      "org/gnome/shell/apps-switcher" = {
-        current-workspace-only = true;
-      };
+        -- Core application shortcuts
+        hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("ghostty"))
+        hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+        hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+        hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 
-      "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = true;
-        night-light-schedule-automatic = true;
-      };
+        -- Noctalia Shell Integration
+        hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
+        hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
+        hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
+        hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher hold"))
 
-      "org/gnome/desktop/interface" = {
-        clock-format = "12h";
-        clock-show-weekday = true;
-        show-battery-percentage = true;
-      };
+        -- Media & Hardware Keys
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"))
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(ipc .. "volume-down"))
+        hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. "volume-mute"))
+        hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. "brightness-up"))
+        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"))
 
-      "org/gtk/settings/file-chooser" = {
-        clock-format = "12h";
-      };
+        -- Directional Focus Movement
+        hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
+        hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+        hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
+        hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+        hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
+        hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
+        hl.bind(mainMod .. " + k", hl.dsp.focus({ direction = "up" }))
+        hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "down" }))
 
-      "org/gnome/desktop/datetime" = {
-        automatic-timezone = true;
-      };
+        -- Workspaces (1-9)
+        for i = 1, 9 do
+          hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = tostring(i) }))
+          hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = tostring(i) }))
+        end
 
-      "org/gnome/shell/extensions/tactile" = {
-        col-0 = 30;
-        col-1 = 15;
-        col-2 = 15;
-        col-3 = 30;
-        layout-2-col-2 = 0;
-        layout-2-col-3 = 0;
-        layout-2-row-1 = 0;
-        layout-2-row-2 = 0;
-        layout-3-col-3 = 0;
-        layout-3-row-2 = 0;
-        monitor-1-layout = 1;
-        row-1 = 1;
-        row-2 = 1;
-      };
+        -- Noctalia Layer & Window Rules
+        hl.layer_rule({
+          name = "noctalia",
+          match = {
+            namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
+          },
+          no_anim = true,
+          ignore_alpha = 0.5,
+          blur = true,
+          blur_popups = true,
+        })
 
-      "org/gnome/shell/extensions/worksets" = {
-        cli-switch = "";
-        debug-mode = true;
-        disable-wallpaper-management = false;
-        hide-app-list = false;
-        isolate-workspaces = true;
-        reverse-menu = false;
-        show-helpers = true;
-        show-notifications = false;
-        show-overlay-thumbnail-labels = true;
-        show-panel-indicator = true;
-        show-workspace-overlay = true;
-      };
+        hl.window_rule({
+          match = { class = "dev.noctalia.Noctalia" },
+          float = true,
+          size = { 1080, 920 },
+        })
 
-      "org/gnome/system/location" = {
-        enabled = true;
-      };
-
-      "org/gnome/settings-daemon/plugins/power" = {
-        sleep-inactive-ac-type = "nothing";
-      };
-
-      "org/gnome/shell/extensions/nightthemeswitcher/time" = {
-        nightthemeswitcher-ondemand-keybinding = [ "<Shift><Super>d" ];
-      };
-
-      "org/gnome/shell/extensions/advanced-alt-tab-window-switcher" = {
-        switcher-popup-preview-selected = 2;
-        switcher-popup-monitor = 3;
-        switcher-popup-timeout = 0;
-        win-switcher-popup-filter = 2;
-        win-switcher-popup-sorting = 1;
-        win-switcher-popup-order = 1;
-        win-switcher-popup-ws-indexes = false;
-      };
+        -- Safely load imperative local overrides if present
+        local custom_file = os.getenv("HOME") .. "/.config/hypr/custom.lua"
+        local f = io.open(custom_file, "r")
+        if f ~= nil then
+          io.close(f)
+          dofile(custom_file)
+        end
+      '';
     };
+
+    home.activation.ensureHyprCustomConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      $DRY_RUN_CMD mkdir -p $HOME/.config/hypr
+      if [ ! -e $HOME/.config/hypr/custom.lua ]; then
+        $DRY_RUN_CMD touch $HOME/.config/hypr/custom.lua
+      fi
+    '';
 
     fonts.fontconfig = {
       defaultFonts.monospace = [ "CaskaydiaCove NF" ];

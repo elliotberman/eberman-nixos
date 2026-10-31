@@ -2,6 +2,8 @@
 {
   wsl.enable = true;
   wsl.defaultUser = "eberman";
+  wsl.ssh-agent.enable = true;
+  programs.ssh.startAgent = false;
 
   networking.networkmanager.enable = lib.mkForce false;
 

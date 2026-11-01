@@ -14,7 +14,7 @@
   security.pam = {
     u2f.enable = true;
     sshAgentAuth.enable = true;
-    services= {
+    services = {
       login.u2f.enable = true;
       sudo = {
         u2f.enable = true;

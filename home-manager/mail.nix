@@ -36,12 +36,18 @@ in
           key = "<space>";
         }
         {
-          map = [ "pager" "index" ];
+          map = [
+            "pager"
+            "index"
+          ];
           action = "group-reply";
           key = "r";
         }
         {
-          map = [ "pager" "index" ];
+          map = [
+            "pager"
+            "index"
+          ];
           action = "reply";
           key = "R";
         }

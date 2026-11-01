@@ -3,7 +3,9 @@
 
   nixConfig = {
     extra-substituters = [ "https://noctalia.cachix.org" ];
-    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
   };
 
   inputs = {
@@ -44,12 +46,12 @@
     systems.url = "github:nix-systems/default";
 
     noctalia = {
-      url = "github:noctalia-dev/noctalia";
+      url = "github:noctalia-dev/noctalia?ref=refs/tags/v5.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
+      url = "github:noctalia-dev/noctalia-greeter?ref=refs/tags/v1.7.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -18,6 +18,7 @@
         "mkhl.direnv"
         "ms-vscode-remote.remote-ssh"
         "ms-vscode.remote-explorer"
+        "noctalia.noctaliatheme"
         "plorefice.devicetree"
         "rust-lang.rust-analyzer"
         "ryanluker.vscode-coverage-gutters"
@@ -75,9 +76,11 @@
         "chat.disableAIFeatures" = true;
         "chat.commandCenter.enabled" = false;
 
-        "window.autoDetectColorScheme" = true;
-        "workbench.preferredLightColorTheme" = "Quiet Light";
-        "workbench.preferredDarkColorTheme" = "Catppuccin Frappé";
+
+        "workbench.colorTheme" = "NoctaliaTheme";
+        # "window.autoDetectColorScheme" = true;
+        # "workbench.preferredLightColorTheme" = "Quiet Light";
+        # "workbench.preferredDarkColorTheme" = "Catppuccin Frappé";
         "workbench.secondarySideBar.defaultVisibility" = "hidden";
 
         "remote.SSH" = {

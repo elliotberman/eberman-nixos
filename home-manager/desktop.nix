@@ -32,7 +32,7 @@
         enable = true;
         enableZshIntegration = true;
         settings = {
-          theme = "dark:Catppuccin Frappe,light:Catppuccin Latte";
+          theme = "noctalia";
           gtk-titlebar-style = "tabs";
         };
       };

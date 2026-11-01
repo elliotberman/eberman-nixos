@@ -1,16 +1,35 @@
 [bar.default]
-center = [ "clock", "privacy" ]
-end = [ "tray", "notifications", "network", "battery", "control-center", "session" ]
+center = [ "lock_keys", "privacy", "clock" ]
+end = [ "tray", "notifications", "network", "battery", "session" ]
 font_scale = 1.0999999828636646
 margin_ends = 0
 padding = 20
 scale = 0.90000000596046448
 shadow = false
-start = [ "launcher", "workspaces" ]
+start = [ "launcher", "workspaces", "active_window" ]
 thickness = 25
 
 [battery]
 warning_threshold = 25
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+pre_action_fade_seconds = 30
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 180.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = true
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 300.0
 
 [location]
 auto_locate = true
@@ -106,7 +125,7 @@ widget_order = [
         background_color = "primary"
         background_opacity = 0.55000000000000004
         clock_style = "digital"
-        color = "on_primary"
+        color = "primary"
         format = "{:%l:%M %p}"
 
     [lockscreen_widgets.widget.lockscreen-widget-0000000000000002]
@@ -129,7 +148,7 @@ widget_order = [
         center_text = true
         circle = true
         clock_style = "digital"
-        color = "on_secondary"
+        color = "secondary"
         font_family = ""
         format = "{:%a %B %d}"
         shadow = true
@@ -140,21 +159,63 @@ widget_order = [
 enabled = true
 
 [plugins]
-enabled = []
+enabled = [ "kenn/keybind-cheatsheet", "tordex/processes" ]
 
 [shell]
 clipboard_enabled = false
 
-[shell.greeter_sync]
-auto_sync = true
+    [shell.greeter_sync]
+    auto_sync = true
 
-[shell.screenshot]
-confirm_region = true
+    [shell.panel]
+    open_near_click_session = true
+
+    [shell.screenshot]
+    confirm_region = true
+
+    [[shell.session.actions]]
+    action = "lock"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "l"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "i"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "s"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "reboot"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "r"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "shutdown"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "u"
+    variant = "destructive"
 
 [theme]
 builtin = "Eldritch"
 mode = "auto"
 source = "wallpaper"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "ghostty" ]
+    community_ids = [ "chromium-based", "vscode" ]
 
 [wallpaper.default]
 path = "/nix/store/s6x85zlg0gd9h0gcnddr13ihglq11ksd-noctalia-5.4.1/share/noctalia/assets/noctalia-wallpaper.png"
@@ -162,8 +223,19 @@ path = "/nix/store/s6x85zlg0gd9h0gcnddr13ihglq11ksd-noctalia-5.4.1/share/noctali
 [wallpaper.last]
 path = "/nix/store/s6x85zlg0gd9h0gcnddr13ihglq11ksd-noctalia-5.4.1/share/noctalia/assets/noctalia-wallpaper.png"
 
+[widget.active_window]
+max_length = 400
+min_length = 400
+show_tooltip = false
+
 [widget.clock]
 format = "{:%a %b %d %l:%M %p}"
 
-[widget.clock.actions]
-left = "panel-toggle control-center"
+    [widget.clock.actions]
+    left = "panel-toggle control-center"
+
+[widget.lock_keys]
+hide_when_off = true
+
+[widget.privacy]
+hide_inactive = true

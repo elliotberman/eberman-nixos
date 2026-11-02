@@ -91,6 +91,8 @@
     backupFileExtension = "backup";
   };
 
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
+
   documentation.dev.enable = true;
 
   nix.settings.experimental-features = [

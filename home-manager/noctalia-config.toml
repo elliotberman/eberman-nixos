@@ -6,7 +6,7 @@ margin_ends = 0
 padding = 20
 scale = 0.90000000596046448
 shadow = false
-start = [ "launcher", "workspaces", "active_window" ]
+start = [ "screenshot", "workspaces", "active_window" ]
 thickness = 25
 
 [battery]
@@ -163,6 +163,7 @@ enabled = [ "kenn/keybind-cheatsheet", "tordex/processes" ]
 
 [shell]
 clipboard_enabled = false
+polkit_agent = true
 
     [shell.greeter_sync]
     auto_sync = true
@@ -172,6 +173,9 @@ clipboard_enabled = false
 
     [shell.screenshot]
     confirm_region = true
+
+    [shell.window_switcher]
+    current_workspace_only = true
 
     [[shell.session.actions]]
     action = "lock"
@@ -214,8 +218,8 @@ mode = "auto"
 source = "wallpaper"
 
     [theme.templates]
-    builtin_ids = [ "gtk3", "gtk4", "ghostty" ]
-    community_ids = [ "chromium-based", "vscode" ]
+    builtin_ids = [ "gtk3", "gtk4", "ghostty", "hyprland" ]
+    community_ids = [ "chromium-based" ]
 
 [wallpaper.default]
 path = "/nix/store/s6x85zlg0gd9h0gcnddr13ihglq11ksd-noctalia-5.4.1/share/noctalia/assets/noctalia-wallpaper.png"

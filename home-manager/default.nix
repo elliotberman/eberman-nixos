@@ -16,6 +16,7 @@
     ./mail.nix
     ./shell.nix
     ./opener.nix
+    ./xdg-browser-dispatch.nix
 
     vscode-server.homeModules.default
     ./vscode.nix

@@ -20,6 +20,7 @@
       chromium
       diffoscope
       gdmap
+      gnome-calculator
       krita
       lua5_4
       meld
@@ -50,7 +51,14 @@
       extraConfig = builtins.readFile ./hyprland.lua;
       plugins = with pkgs.hyprlandPlugins; [
         hy3
-        hyprfocus
+      ];
+    };
+
+    xdg.portal = {
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config.hyprland.default = [
+        "hyprland"
+        "gtk"
       ];
     };
 
@@ -61,7 +69,22 @@
       fi
     '';
 
-    home.activation.reloadHyprland = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    # Noctalia generates this theme at runtime; ghostty config validation during
+    # activation fails on first run without it. Must be a plain file, not an HM
+    # symlink, so noctalia can overwrite it.
+    home.activation.ensureGhosttyNoctaliaTheme =
+      lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ]
+        ''
+          if [ ! -e $HOME/.config/ghostty/themes/noctalia ]; then
+            $DRY_RUN_CMD mkdir -p $HOME/.config/ghostty/themes
+            if [ -z "''${DRY_RUN:-}" ]; then
+              echo "background = #1e1e2e" > $HOME/.config/ghostty/themes/noctalia
+              echo "foreground = #cdd6f4" >> $HOME/.config/ghostty/themes/noctalia
+            fi
+          fi
+        '';
+
+    home.activation.reloadHyprland =lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ] && command -v hyprctl >/dev/null 2>&1; then
         $DRY_RUN_CMD hyprctl reload || true
       fi
@@ -70,6 +93,13 @@
     fonts.fontconfig = {
       defaultFonts.monospace = [ "CaskaydiaCove NF" ];
       enable = true;
+    };
+
+    home.pointerCursor = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+      size = 24;
+      hyprcursor.enable = true;
     };
   };
 }

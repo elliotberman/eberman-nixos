@@ -221,6 +221,10 @@ source = "wallpaper"
     builtin_ids = [ "gtk3", "gtk4", "ghostty", "hyprland" ]
     community_ids = [ "chromium-based" ]
 
+    [theme.templates.user.hypr-groupbar]
+    input_path = "$XDG_CONFIG_HOME/noctalia/templates/hypr-groupbar.lua"
+    output_path = "$XDG_CONFIG_HOME/hypr/noctalia-groupbar.lua"
+
 [wallpaper.default]
 path = "/nix/store/s6x85zlg0gd9h0gcnddr13ihglq11ksd-noctalia-5.4.1/share/noctalia/assets/noctalia-wallpaper.png"
 

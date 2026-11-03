@@ -18,8 +18,14 @@ hl.config({
     layout = "master",
     resize_on_border = true,
   },
+  misc = {
+    focus_on_activate = true,
+  },
   input = {
-    follow_mouse = 2,
+    follow_mouse = 0,
+    touchpad = {
+      natural_scroll = true,
+    },
   },
   decoration = {
     rounding = 12,
@@ -40,6 +46,18 @@ hl.config({
 -- Colors rendered by Noctalia's hyprland template; absent until its first run
 local ok, noctalia_theme = pcall(require, "noctalia")
 if ok then noctalia_theme.apply_theme() end
+pcall(require, "noctalia-groupbar")
+-- Without gradients only the thin indicator strip is drawn; the tab body shows the wallpaper
+hl.config({
+  group = {
+    groupbar = {
+      gradients = true,
+      gaps_in = 0,
+      gaps_out = 0,
+      keep_upper_gap = false,
+    },
+  },
+})
 
 local mainMod = "SUPER"
 local noctalia = "noctalia msg "
@@ -71,7 +89,29 @@ hl.bind(mainMod .. " + G", hl.dsp.group.toggle(), { description = "Toggle group 
 hl.bind("ALT + Tab", hl.dsp.exec_cmd(noctalia .. "window-switcher hold"), { description = "Window switcher" })
 hl.bind("ALT + SHIFT + Tab", hl.dsp.exec_cmd(noctalia .. "window-switcher hold reverse"), { description = "Window switcher (reverse)" })
 -- Swap with the neighbour in dir; at the workspace edge, trade places with the window on the
--- adjacent monitor's workspace. Nothing happens past the last monitor.
+-- adjacent monitor's workspace, or just move there if that monitor is empty. Nothing happens
+-- past the last monitor.
+local function monitor_toward(from, dir)
+  local horiz = dir == "left" or dir == "right"
+  local best, best_gap
+  for _, m in ipairs(hl.get_monitors()) do
+    if m.id ~= from.id then
+      local gap, overlap
+      if horiz then
+        gap = dir == "right" and m.x - (from.x + from.width) or from.x - (m.x + m.width)
+        overlap = m.y < from.y + from.height and from.y < m.y + m.height
+      else
+        gap = dir == "down" and m.y - (from.y + from.height) or from.y - (m.y + m.height)
+        overlap = m.x < from.x + from.width and from.x < m.x + m.width
+      end
+      if overlap and gap >= 0 and (not best_gap or gap < best_gap) then
+        best, best_gap = m, gap
+      end
+    end
+  end
+  return best
+end
+
 local function swap(dir)
   local w = hl.get_active_window()
   if not w then return end
@@ -80,7 +120,17 @@ local function swap(dir)
   hl.dispatch(hl.dsp.focus({ direction = dir }))
   local n = hl.get_active_window()
   hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
-  if not n or n.address == w.address then return end
+  if not n or n.address == w.address then
+    local m = monitor_toward(w.monitor, dir)
+    if not m then return end
+    hl.dispatch(hl.dsp.window.move({
+      workspace = desktops.ws_id(desktops.current(), m),
+      follow = false,
+      window = "address:" .. w.address,
+    }))
+    hl.dispatch(hl.dsp.focus({ window = "address:" .. w.address }))
+    return
+  end
   local nid = n.workspace.id
   if nid == wid then
     hl.dispatch(hl.dsp.window.swap({ direction = dir }))
@@ -262,6 +312,7 @@ desktops.current = function() return cur end
 
 -- 4. Noctalia Shell
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(noctalia .. "panel-toggle control-center"), { description = "Toggle control center" })
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(noctalia .. "panel-toggle control-center calendar"), { description = "Toggle calendar" })
 hl.bind(mainMod .. " + U", hl.dsp.exec_cmd(noctalia .. "panel-toggle session"), { description = "Toggle session menu (logout/power)" })
 hl.bind(mainMod .. " + F1", hl.dsp.exec_cmd(noctalia .. "panel-toggle kenn/keybind-cheatsheet:cheatsheet"), { description = "Show keybind cheatsheet" })
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd(noctalia .. "session lock"), { description = "Lock session" })

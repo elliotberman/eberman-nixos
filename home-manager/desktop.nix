@@ -49,10 +49,9 @@
       enable = true;
       configType = "lua";
       extraConfig = builtins.readFile ./hyprland.lua;
-      plugins = with pkgs.hyprlandPlugins; [
-        hy3
-      ];
     };
+
+    xdg.configFile."noctalia/templates/hypr-groupbar.lua".source = ./noctalia-groupbar.lua;
 
     xdg.portal = {
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

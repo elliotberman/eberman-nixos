@@ -83,7 +83,7 @@
           fi
         '';
 
-    home.activation.reloadHyprland =lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    home.activation.reloadHyprland = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [ -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ] && command -v hyprctl >/dev/null 2>&1; then
         $DRY_RUN_CMD hyprctl reload || true
       fi

@@ -54,12 +54,13 @@
       };
     };
 
-    systemd.tmpfiles.settings."10-noctalia-chromium"."/etc/chromium/policies/managed/noctalia-color.json".f = {
-      user = "eberman";
-      group = "users";
-      mode = "0644";
-      argument = "{}";
-    };
+    systemd.tmpfiles.settings."10-noctalia-chromium"."/etc/chromium/policies/managed/noctalia-color.json".f =
+      {
+        user = "eberman";
+        group = "users";
+        mode = "0644";
+        argument = "{}";
+      };
 
     fonts.packages = with pkgs; [ nerd-fonts.caskaydia-cove ];
   };

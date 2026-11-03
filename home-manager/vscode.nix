@@ -75,7 +75,6 @@
         "chat.disableAIFeatures" = true;
         "chat.commandCenter.enabled" = false;
 
-
         "window.autoDetectColorScheme" = true;
         "workbench.preferredLightColorTheme" = "Quiet Light";
         "workbench.preferredDarkColorTheme" = "Catppuccin Frappé";

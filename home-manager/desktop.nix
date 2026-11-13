@@ -1,10 +1,18 @@
 {
+  noctalia,
+  ...
+}@flakeInputs:
+{
   pkgs,
   lib,
   config,
   ...
 }:
 {
+  imports = [
+    noctalia.homeModules.default
+  ];
+
   options.eberman.enableDesktop = lib.mkEnableOption "Enable graphical programs";
 
   config = lib.mkIf config.eberman.enableDesktop {
@@ -12,8 +20,9 @@
       chromium
       diffoscope
       gdmap
-      gnome-tweaks
+      gnome-calculator
       krita
+      lua5_4
       meld
     ];
 
@@ -24,134 +33,73 @@
         enable = true;
         enableZshIntegration = true;
         settings = {
-          theme = "dark:Catppuccin Frappe,light:Catppuccin Latte";
+          theme = "noctalia";
           gtk-titlebar-style = "tabs";
+          confirm-close-surface = false;
         };
       };
 
-      gnome-shell = {
+      noctalia = {
         enable = true;
-        extensions = with pkgs.gnomeExtensions; [
-          { package = advanced-alttab-window-switcher; }
-          { package = appindicator; }
-          { package = emoji-copy; }
-          { package = launch-new-instance; }
-          { package = native-window-placement; }
-          { package = night-theme-switcher; }
-          { package = removable-drive-menu; }
-          { package = status-icons; }
-          { package = tactile; }
-        ];
+        systemd.enable = true;
+        settings = builtins.fromTOML (builtins.readFile ./noctalia-config.toml);
       };
     };
 
-    dconf.settings = {
-      "org/gnome/shell" = {
-        disable-user-extensions = false;
-        favorite-apps = [
-          "chromium-browser.desktop"
-          "com.mitchellh.ghostty.desktop"
-          "code.desktop"
-        ];
-      };
-
-      "org/gnome/desktop/wm/keybindings" = {
-        switch-applications = [ ];
-        switch-applications-backward = [ ];
-        switch-to-workspace-left = [ "<Control><Super>Left" ];
-        switch-to-workspace-right = [ "<Control><Super>Right" ];
-        switch-windows = [ "<Alt>Tab" ];
-        switch-windows-backward = [ "<Shift><Alt>Tab" ];
-      };
-
-      "org/gnome/settings-daemon/plugins/media-keys" = {
-        logout = [ ];
-      };
-
-      "org/gnome/mutter" = {
-        workspace-on-on-primary = false;
-        workspaces-only-on-primary = false;
-      };
-
-      "org/gnome/shell/apps-switcher" = {
-        current-workspace-only = true;
-      };
-
-      "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = true;
-        night-light-schedule-automatic = true;
-      };
-
-      "org/gnome/desktop/interface" = {
-        clock-format = "12h";
-        clock-show-weekday = true;
-        show-battery-percentage = true;
-      };
-
-      "org/gtk/settings/file-chooser" = {
-        clock-format = "12h";
-      };
-
-      "org/gnome/desktop/datetime" = {
-        automatic-timezone = true;
-      };
-
-      "org/gnome/shell/extensions/tactile" = {
-        col-0 = 30;
-        col-1 = 15;
-        col-2 = 15;
-        col-3 = 30;
-        layout-2-col-2 = 0;
-        layout-2-col-3 = 0;
-        layout-2-row-1 = 0;
-        layout-2-row-2 = 0;
-        layout-3-col-3 = 0;
-        layout-3-row-2 = 0;
-        monitor-1-layout = 1;
-        row-1 = 1;
-        row-2 = 1;
-      };
-
-      "org/gnome/shell/extensions/worksets" = {
-        cli-switch = "";
-        debug-mode = true;
-        disable-wallpaper-management = false;
-        hide-app-list = false;
-        isolate-workspaces = true;
-        reverse-menu = false;
-        show-helpers = true;
-        show-notifications = false;
-        show-overlay-thumbnail-labels = true;
-        show-panel-indicator = true;
-        show-workspace-overlay = true;
-      };
-
-      "org/gnome/system/location" = {
-        enabled = true;
-      };
-
-      "org/gnome/settings-daemon/plugins/power" = {
-        sleep-inactive-ac-type = "nothing";
-      };
-
-      "org/gnome/shell/extensions/nightthemeswitcher/time" = {
-        nightthemeswitcher-ondemand-keybinding = [ "<Shift><Super>d" ];
-      };
-
-      "org/gnome/shell/extensions/advanced-alt-tab-window-switcher" = {
-        switcher-popup-preview-selected = 2;
-        switcher-popup-monitor = 3;
-        switcher-popup-timeout = 0;
-        win-switcher-popup-filter = 2;
-        win-switcher-popup-sorting = 1;
-        win-switcher-popup-order = 1;
-        win-switcher-popup-ws-indexes = false;
-      };
+    wayland.windowManager.hyprland = {
+      enable = true;
+      configType = "lua";
+      extraConfig = builtins.readFile ./hyprland.lua;
     };
+
+    xdg.configFile."noctalia/templates/hypr-groupbar.lua".source = ./noctalia-groupbar.lua;
+
+    xdg.portal = {
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config.hyprland.default = [
+        "hyprland"
+        "gtk"
+      ];
+    };
+
+    home.activation.ensureHyprCustomConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      $DRY_RUN_CMD mkdir -p $HOME/.config/hypr
+      if [ ! -e $HOME/.config/hypr/custom.lua ]; then
+        $DRY_RUN_CMD touch $HOME/.config/hypr/custom.lua
+      fi
+    '';
+
+    # Noctalia generates this theme at runtime; ghostty config validation during
+    # activation fails on first run without it. Must be a plain file, not an HM
+    # symlink, so noctalia can overwrite it.
+    home.activation.ensureGhosttyNoctaliaTheme =
+      lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ]
+        ''
+          if [ ! -e $HOME/.config/ghostty/themes/noctalia ]; then
+            $DRY_RUN_CMD mkdir -p $HOME/.config/ghostty/themes
+            if [ -z "''${DRY_RUN:-}" ]; then
+              echo "background = #1e1e2e" > $HOME/.config/ghostty/themes/noctalia
+              echo "foreground = #cdd6f4" >> $HOME/.config/ghostty/themes/noctalia
+            fi
+          fi
+        '';
+
+    home.activation.reloadHyprland = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      if [ -n "''${HYPRLAND_INSTANCE_SIGNATURE:-}" ] && command -v hyprctl >/dev/null 2>&1; then
+        $DRY_RUN_CMD hyprctl reload || true
+      fi
+    '';
 
     fonts.fontconfig = {
       defaultFonts.monospace = [ "CaskaydiaCove NF" ];
       enable = true;
+    };
+
+    home.pointerCursor = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+      size = 24;
+      hyprcursor.enable = true;
     };
   };
 }

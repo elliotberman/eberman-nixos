@@ -1,4 +1,8 @@
-{ nix-index, vscode-server, ... }:
+{
+  nix-index,
+  vscode-server,
+  ...
+}@flakeInputs:
 {
   config,
   pkgs,
@@ -8,10 +12,11 @@
 {
   imports = [
     nix-index.homeModules.nix-index
-    ./desktop.nix
+    (import ./desktop.nix flakeInputs)
     ./mail.nix
     ./shell.nix
     ./opener.nix
+    ./xdg-browser-dispatch.nix
 
     vscode-server.homeModules.default
     ./vscode.nix

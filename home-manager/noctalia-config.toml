@@ -1,0 +1,190 @@
+[bar.default]
+center = [ "lock_keys", "privacy", "clock" ]
+end = [ "tray", "notifications", "network", "battery", "session" ]
+font_scale = 1.0999999828636646
+margin_ends = 0
+padding = 20
+scale = 0.90000000596046448
+shadow = false
+start = [ "screenshot", "workspaces", "active_window" ]
+thickness = 25
+
+[battery]
+warning_threshold = 25
+
+[control_center]
+
+    [control_center.calendar]
+    hide_past_events = true
+    show_events_location = true
+
+    [[control_center.shortcuts]]
+    type = "wifi"
+
+    [[control_center.shortcuts]]
+    type = "bluetooth"
+
+    [[control_center.shortcuts]]
+    type = "nightlight"
+
+    [[control_center.shortcuts]]
+    type = "dark_mode"
+
+    [[control_center.shortcuts]]
+    type = "notification"
+
+    [[control_center.shortcuts]]
+    type = "power_profile"
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+pre_action_fade_seconds = 30
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 180.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = true
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 300.0
+
+[location]
+auto_locate = true
+
+[lockscreen]
+blur_intensity = 0.8
+grace_period_seconds = 5
+transition_duration = 400
+transition = [ "zoom" ]
+
+[lockscreen_widgets]
+enabled = true
+schema_version = 2
+
+    [lockscreen_widgets.grid]
+    cell_size = 64
+    major_interval = 4
+    visible = true
+
+[nightlight]
+enabled = true
+
+[notification]
+history_retention_hours = 1
+
+[plugins]
+enabled = [ "kenn/keybind-cheatsheet", "tordex/processes" ]
+
+[shell]
+clipboard_enabled = false
+polkit_agent = true
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.launcher]
+    categories = false
+    fetch_exchange_rates = false
+    layout = "simple"
+    show_navigation_labels = false
+
+        [shell.launcher.providers.windows]
+        global = false
+
+    [shell.panel]
+    open_near_click_session = true
+
+    [shell.screenshot]
+    annotate = true
+    confirm_region = true
+
+    [shell.window_switcher]
+    current_workspace_only = true
+
+    [[shell.session.actions]]
+    action = "lock"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "l"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "i"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "s"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "reboot"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "r"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "shutdown"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "u"
+    variant = "destructive"
+
+[theme]
+builtin = "Eldritch"
+mode = "auto"
+source = "wallpaper"
+wallpaper_scheme = "m3-tonal-spot"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "ghostty", "hyprland" ]
+    community_ids = [ "chromium-based" ]
+
+    [theme.templates.user.hypr-groupbar]
+    input_path = "$XDG_CONFIG_HOME/noctalia/templates/hypr-groupbar.lua"
+    output_path = "$XDG_CONFIG_HOME/hypr/noctalia-groupbar.lua"
+
+[wallpaper.default]
+path = "/nix/store/s6x85zlg0gd9h0gcnddr13ihglq11ksd-noctalia-5.4.1/share/noctalia/assets/noctalia-wallpaper.png"
+
+[wallpaper.last]
+path = "/nix/store/s6x85zlg0gd9h0gcnddr13ihglq11ksd-noctalia-5.4.1/share/noctalia/assets/noctalia-wallpaper.png"
+
+[widget.active_window]
+max_length = 400
+min_length = 400
+show_tooltip = false
+
+[widget.clock]
+format = "{:%a %b %d %l:%M %p}"
+
+    [widget.clock.actions]
+    left = "panel-toggle control-center"
+
+[widget.lock_keys]
+hide_when_off = true
+show_num_lock = false
+
+[widget.privacy]
+hide_inactive = true
+
+[widget.workspaces]
+active_pill_size = 2.5
+focused_output_only = true
+show_labels = false
+
+[weather]
+unit = "imperial"

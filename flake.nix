@@ -1,6 +1,13 @@
 {
   description = "Elliot's nixos config";
 
+  nixConfig = {
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
@@ -37,6 +44,16 @@
     };
 
     systems.url = "github:nix-systems/default";
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia?ref=refs/tags/v5.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter?ref=refs/tags/v1.7.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -15,7 +15,7 @@
   imports = [
     home-manager.nixosModules.home-manager
     (import ./eberman.nix flakeInputs)
-    ./desktop.nix
+    (import ./desktop.nix flakeInputs)
   ];
 
   nixpkgs.overlays = [
@@ -90,6 +90,11 @@
     useUserPackages = true;
     backupFileExtension = "backup";
   };
+
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
 
   documentation.dev.enable = true;
 

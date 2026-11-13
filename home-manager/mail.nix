@@ -36,12 +36,18 @@ in
           key = "<space>";
         }
         {
-          map = [ "pager" "index" ];
+          map = [
+            "pager"
+            "index"
+          ];
           action = "group-reply";
           key = "r";
         }
         {
-          map = [ "pager" "index" ];
+          map = [
+            "pager"
+            "index"
+          ];
           action = "reply";
           key = "R";
         }
@@ -53,7 +59,7 @@ in
         {
           map = [ "index" ];
           action = "display-message";
-          key = "enter";
+          key = "space";
         }
       ];
 
@@ -65,6 +71,7 @@ in
 
       extraConfig = ''
         set fast_reply = yes
+        set edit_headers = yes
       '';
     };
   };

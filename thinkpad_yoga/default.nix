@@ -14,7 +14,7 @@
   security.pam = {
     u2f.enable = true;
     sshAgentAuth.enable = true;
-    services= {
+    services = {
       login.u2f.enable = true;
       sudo = {
         u2f.enable = true;
@@ -33,6 +33,8 @@
   '';
 
   nixpkgs.config.allowUnfree = true;
+  eberman.enableDesktop = true;
+
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "26.05";
 }

@@ -35,6 +35,7 @@
         settings = {
           theme = "noctalia";
           gtk-titlebar-style = "tabs";
+          confirm-close-surface = false;
         };
       };
 

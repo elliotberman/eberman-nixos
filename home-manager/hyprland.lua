@@ -213,6 +213,14 @@ local function switch(n)
   if origin then
     hl.dispatch(hl.dsp.focus({ monitor = origin.name }))
   end
+  -- Windows opened before desktops existed (or on a freshly plugged monitor) sit on Hyprland's
+  -- default workspaces 1-99; pull them onto this desktop.
+  for _, w in ipairs(hl.get_windows()) do
+    local ws = w.workspace
+    if ws and not ws.special and ws.id < 100 and w.monitor then
+      hl.dispatch(hl.dsp.window.move({ workspace = ws_id(n, w.monitor), follow = false, window = "address:" .. w.address }))
+    end
+  end
   cur = n
   switching = false
 end
@@ -305,6 +313,7 @@ hl.on("workspace.active", function(ws)
 end)
 
 hl.on("hyprland.start", function() switch(1) end)
+hl.on("monitor.added", function() switch(cur) end)
 
 -- For machine-specific config (monitors.lua) that must place windows on desktops.
 desktops.ws_id, desktops.parse, desktops.switch = ws_id, parse, switch

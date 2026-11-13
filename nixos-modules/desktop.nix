@@ -36,6 +36,7 @@
       displayManager.noctalia-greeter = {
         enable = true;
         passwordless-sync-users = [ "eberman" ];
+        settings.idle.timeout = 300;
       };
 
       gnome.gnome-keyring.enable = true;
